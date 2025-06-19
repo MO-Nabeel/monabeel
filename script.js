@@ -141,17 +141,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitBtn.textContent = 'Sending...';
                 submitBtn.disabled = true;
 
-                // Prepare template params
+                // Prepare template params to match EmailJS template
                 const templateParams = {
-                    from_name: name,
-                    from_email: email,
+                    name: name,
+                    email: email,
                     message: message,
-                    to_name: "Nabeel"
+                    title: "Website Contact"
                 };
+                console.log(templateParams);
 
-                emailjs.send('service_0nhokak', 'template_10l6adv', templateParams)
+                emailjs.send('service_0nhokak', 'template_tgqtqmz', templateParams)
                     .then(function(response) {
-                        // Show custom popup
                         const popup = document.getElementById('custom-popup');
                         popup.classList.add('active');
                         form.reset();
@@ -159,6 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         submitBtn.disabled = false;
                     }, function(error) {
                         alert('Failed to send message. Please try again later.');
+                        console.error('EmailJS error:', error);
                         submitBtn.textContent = originalText;
                         submitBtn.disabled = false;
                     });
