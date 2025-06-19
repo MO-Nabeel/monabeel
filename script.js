@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     message: message
                 };
 
-                emailjs.send('service_0nhokak', 'template_default', templateParams)
+                emailjs.send('service_0nhokak', 'template_10l6adv', templateParams)
                     .then(function(response) {
                         // Show custom popup
                         const popup = document.getElementById('custom-popup');
