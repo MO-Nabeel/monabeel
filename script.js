@@ -113,51 +113,59 @@ document.querySelectorAll('.project-card').forEach(card => {
     });
 });
 
-// Initialize EmailJS
-(function() {
-    emailjs.init("GrQC86k2Bn5pSozFR");
-})();
+// Initialize EmailJS and contact form handling with EmailJS
 
-// Contact form handling with EmailJS
-document.querySelector('.contact-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init("GrQC86k2Bn5pSozFR");
 
-    const form = this;
-    const name = form.querySelector('input[type="text"]').value;
-    const email = form.querySelector('input[type="email"]').value;
-    const message = form.querySelector('textarea').value;
+        // Contact form handling with EmailJS
+        var contactForm = document.querySelector('.contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
 
-    if (!name || !email || !message) {
-        // Optionally show a validation popup here
-        return;
+                const form = this;
+                const name = form.querySelector('input[type="text"]').value;
+                const email = form.querySelector('input[type="email"]').value;
+                const message = form.querySelector('textarea').value;
+
+                if (!name || !email || !message) {
+                    // Optionally show a validation popup here
+                    return;
+                }
+
+                // Show loading state
+                const submitBtn = form.querySelector('.submit-btn');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+
+                // Prepare template params
+                const templateParams = {
+                    from_name: name,
+                    from_email: email,
+                    message: message
+                };
+
+                emailjs.send('service_0nhokak', 'template_default', templateParams)
+                    .then(function(response) {
+                        // Show custom popup
+                        const popup = document.getElementById('custom-popup');
+                        popup.classList.add('active');
+                        form.reset();
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }, function(error) {
+                        alert('Failed to send message. Please try again later.');
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    });
+            });
+        }
+    } else {
+        console.error('EmailJS library is not loaded.');
     }
-
-    // Show loading state
-    const submitBtn = form.querySelector('.submit-btn');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Sending...';
-    submitBtn.disabled = true;
-
-    // Prepare template params
-    const templateParams = {
-        from_name: name,
-        from_email: email,
-        message: message
-    };
-
-    emailjs.send('service_0nhokak', 'template_default', templateParams)
-        .then(function(response) {
-            // Show custom popup
-            const popup = document.getElementById('custom-popup');
-            popup.classList.add('active');
-            form.reset();
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }, function(error) {
-            alert('Failed to send message. Please try again later.');
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        });
 });
 
 // Custom popup close logic
