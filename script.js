@@ -113,36 +113,51 @@ document.querySelectorAll('.project-card').forEach(card => {
     });
 });
 
-// Contact form handling
-document.querySelector('.contact-form').addEventListener('submit', function (e) {
+// Initialize EmailJS
+(function() {
+    emailjs.init("GrQC86k2Bn5pSozFR");
+})();
+
+// Contact form handling with EmailJS
+document.querySelector('.contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // Get form data
-    const formData = new FormData(this);
-    const name = this.querySelector('input[type="text"]').value;
-    const email = this.querySelector('input[type="email"]').value;
-    const message = this.querySelector('textarea').value;
+    const form = this;
+    const name = form.querySelector('input[type="text"]').value;
+    const email = form.querySelector('input[type="email"]').value;
+    const message = form.querySelector('textarea').value;
 
-    // Simple validation
     if (!name || !email || !message) {
         // Optionally show a validation popup here
         return;
     }
 
-    // Simulate form submission
-    const submitBtn = this.querySelector('.submit-btn');
+    // Show loading state
+    const submitBtn = form.querySelector('.submit-btn');
     const originalText = submitBtn.textContent;
     submitBtn.textContent = 'Sending...';
     submitBtn.disabled = true;
 
-    setTimeout(() => {
-        // Show custom popup
-        const popup = document.getElementById('custom-popup');
-        popup.classList.add('active');
-        this.reset();
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    }, 1200);
+    // Prepare template params
+    const templateParams = {
+        from_name: name,
+        from_email: email,
+        message: message
+    };
+
+    emailjs.send('service_0nhokak', 'template_default', templateParams)
+        .then(function(response) {
+            // Show custom popup
+            const popup = document.getElementById('custom-popup');
+            popup.classList.add('active');
+            form.reset();
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }, function(error) {
+            alert('Failed to send message. Please try again later.');
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        });
 });
 
 // Custom popup close logic
