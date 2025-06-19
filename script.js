@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     message: message,
                     title: "Website Contact"
                 };
-                console.log(templateParams);
+                // console.log(templateParams);
 
                 emailjs.send('service_0nhokak', 'template_tgqtqmz', templateParams)
                     .then(function(response) {
@@ -159,14 +159,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         submitBtn.disabled = false;
                     }, function(error) {
                         alert('Failed to send message. Please try again later.');
-                        console.error('EmailJS error:', error);
                         submitBtn.textContent = originalText;
                         submitBtn.disabled = false;
+                        // console.error(error);
                     });
             });
         }
     } else {
-        console.error('EmailJS library is not loaded.');
+        // console.error('EmailJS library is not loaded.');
     }
 });
 
