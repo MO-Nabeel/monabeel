@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function typeWriter(element, text, speed = 100) {
     let i = 0;
     element.innerHTML = '';
-    
+
     function type() {
         if (i < text.length) {
             element.innerHTML += text.charAt(i);
@@ -93,48 +93,48 @@ window.addEventListener('scroll', () => {
 
 // Skill card hover effects
 document.querySelectorAll('.skill-card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
+    card.addEventListener('mouseenter', function () {
         this.style.transform = 'translateY(-10px) scale(1.02)';
     });
-    
-    card.addEventListener('mouseleave', function() {
+
+    card.addEventListener('mouseleave', function () {
         this.style.transform = 'translateY(0) scale(1)';
     });
 });
 
 // Project card hover effects
 document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
+    card.addEventListener('mouseenter', function () {
         this.style.transform = 'translateY(-10px) scale(1.02)';
     });
-    
-    card.addEventListener('mouseleave', function() {
+
+    card.addEventListener('mouseleave', function () {
         this.style.transform = 'translateY(0) scale(1)';
     });
 });
 
 // Contact form handling
-document.querySelector('.contact-form').addEventListener('submit', function(e) {
+document.querySelector('.contact-form').addEventListener('submit', function (e) {
     e.preventDefault();
-    
+
     // Get form data
     const formData = new FormData(this);
     const name = this.querySelector('input[type="text"]').value;
     const email = this.querySelector('input[type="email"]').value;
     const message = this.querySelector('textarea').value;
-    
+
     // Simple validation
     if (!name || !email || !message) {
         // Optionally show a validation popup here
         return;
     }
-    
+
     // Simulate form submission
     const submitBtn = this.querySelector('.submit-btn');
     const originalText = submitBtn.textContent;
     submitBtn.textContent = 'Sending...';
     submitBtn.disabled = true;
-    
+
     setTimeout(() => {
         // Show custom popup
         const popup = document.getElementById('custom-popup');
@@ -146,12 +146,12 @@ document.querySelector('.contact-form').addEventListener('submit', function(e) {
 });
 
 // Custom popup close logic
-document.getElementById('custom-popup-close').onclick = function() {
+document.getElementById('custom-popup-close').onclick = function () {
     document.getElementById('custom-popup').classList.remove('active');
 };
 
 // Optional: close popup on outside click
-document.getElementById('custom-popup').addEventListener('click', function(e) {
+document.getElementById('custom-popup').addEventListener('click', function (e) {
     if (e.target === this) {
         this.classList.remove('active');
     }
@@ -179,13 +179,13 @@ function createParticle() {
     particle.style.borderRadius = '50%';
     particle.style.pointerEvents = 'none';
     particle.style.zIndex = '1';
-    
+
     // Random position
     particle.style.left = Math.random() * window.innerWidth + 'px';
     particle.style.top = window.innerHeight + 'px';
-    
+
     document.body.appendChild(particle);
-    
+
     // Animate particle
     const animation = particle.animate([
         { transform: 'translateY(0px)', opacity: 1 },
@@ -194,7 +194,7 @@ function createParticle() {
         duration: Math.random() * 3000 + 2000,
         easing: 'linear'
     });
-    
+
     animation.onfinish = () => {
         particle.remove();
     };
@@ -211,7 +211,7 @@ let trail = [];
 document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    
+
     // Create trail element
     const trailElement = document.createElement('div');
     trailElement.style.position = 'fixed';
@@ -223,9 +223,9 @@ document.addEventListener('mousemove', (e) => {
     trailElement.style.zIndex = '9999';
     trailElement.style.left = mouseX - 3 + 'px';
     trailElement.style.top = mouseY - 3 + 'px';
-    
+
     document.body.appendChild(trailElement);
-    
+
     // Animate trail element
     const animation = trailElement.animate([
         { transform: 'scale(1)', opacity: 0.8 },
@@ -234,13 +234,13 @@ document.addEventListener('mousemove', (e) => {
         duration: 500,
         easing: 'ease-out'
     });
-    
+
     animation.onfinish = () => {
         trailElement.remove();
     };
-    
+
     trail.push(trailElement);
-    
+
     // Limit trail length
     if (trail.length > 10) {
         trail.shift().remove();
@@ -277,7 +277,7 @@ const projectData = [
 
 const projectLinks = document.querySelectorAll('.project-link');
 projectLinks.forEach((btn, idx) => {
-    btn.addEventListener('click', function(e) {
+    btn.addEventListener('click', function (e) {
         e.preventDefault();
         const data = projectData[idx];
         if (!data) return;
@@ -295,10 +295,10 @@ projectLinks.forEach((btn, idx) => {
     });
 });
 
-document.getElementById('project-popup-close').onclick = function() {
+document.getElementById('project-popup-close').onclick = function () {
     document.getElementById('project-popup').classList.remove('active');
 };
-document.getElementById('project-popup').addEventListener('click', function(e) {
+document.getElementById('project-popup').addEventListener('click', function (e) {
     if (e.target === this) {
         this.classList.remove('active');
     }
