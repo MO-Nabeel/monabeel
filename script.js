@@ -145,7 +145,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const templateParams = {
                     from_name: name,
                     from_email: email,
-                    message: message
+                    message: message,
+                    to_name: "Nabeel"
                 };
 
                 emailjs.send('service_0nhokak', 'template_10l6adv', templateParams)
